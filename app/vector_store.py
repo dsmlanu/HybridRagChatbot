@@ -1,7 +1,7 @@
 import os
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
-from app.ingest import run_ingestion
+from ingest import run_ingestion
 
 
 # -----------------------------

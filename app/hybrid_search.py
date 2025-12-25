@@ -1,7 +1,7 @@
 from rank_bm25 import BM25Okapi
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from app.ingest import run_ingestion
+from ingest import run_ingestion
 import numpy as np
 
 

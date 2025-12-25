@@ -1,5 +1,5 @@
-from app.hybrid_search import hybrid_search
-from app.ingest import run_ingestion
+from hybrid_search import hybrid_search
+from ingest import run_ingestion
 import subprocess
 
 import sys

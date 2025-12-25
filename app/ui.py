@@ -1,8 +1,8 @@
 import streamlit as st
 import os
-from app.ingest import run_ingestion
-from app.vector_store import create_chroma_db
-from app.rag_pipeline import rag_pipeline
+from ingest import run_ingestion
+from vector_store import create_chroma_db
+from rag_pipeline import rag_pipeline
 
 # -----------------------------
 # APP CONFIG
