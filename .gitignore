@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# Build / cache
+build/
+dist/
+*.egg-info/
+
+# Data / vectors / models
+chroma_db/
+temp_uploads/
+*.pkl
+*.pt
+*.bin
+*.model
+*.jsonl
+
+# OS files
+.DS_Store
+Thumbs.db
+
