@@ -3,17 +3,41 @@ from ingest import run_ingestion
 import subprocess
 import requests
 
-BACKEND_URL = "https://hybrid-rag-fastapi-backend.onrender.com/generate"
+BACKEND_URL = "https://hybrid-rag-fastapi-backend.onrender.comvenv/generate"
 
 # ----------------------------------------------------------------sw2   1-------
 # 1. CALL LLM (OLLAMA)  This method we can use when we  use fast api
 # -----------------------------------------------------------------------
+import os
+import requests
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+def call_llm(prompt: str):
+    url = "https://api.groq.com/openai/v1/chat/completions"
+
+    headers = {
+        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "model": "llama3-70b-8192",
+        "messages": [
+            {"role": "user", "content": prompt}
+        ]
+    }
+
+    r = requests.post(url, json=data, headers=headers)
+    r.raise_for_status()
+
+    return r.json()["choices"][0]["message"]["content"]
 
 
-def call_llm(prompt):
+'''def call_llm(prompt):
     payload = {"prompt": prompt}
     r = requests.post(BACKEND_URL, json=payload)
-    return r.json().get("response", "")
+    return r.json().get("response", "")'''
 
 import sys
 sys.stdout.reconfigure(encoding="utf-8")
