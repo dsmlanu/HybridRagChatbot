@@ -1,0 +1,16 @@
+pdfplumber
+python-docx
+beautifulsoup4
+nltk
+langchain
+langchain_text_splitters
+langchain-community
+chromadb
+sentence-transformers
+rank-bm25
+streamlit
+fastapi
+uvicorn[standard]
+requests
+pyngrok
+python-multipart
