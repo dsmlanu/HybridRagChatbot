@@ -1,6 +1,19 @@
 from hybrid_search import hybrid_search
 from ingest import run_ingestion
 import subprocess
+import requests
+
+BACKEND_URL = "https://hybrid-rag-fastapi-backend.onrender.com/generate"
+
+# ----------------------------------------------------------------sw2   1-------
+# 1. CALL LLM (OLLAMA)  This method we can use when we  use fast api
+# -----------------------------------------------------------------------
+
+
+def call_llm(prompt):
+    payload = {"prompt": prompt}
+    r = requests.post(BACKEND_URL, json=payload)
+    return r.json().get("response", "")
 
 import sys
 sys.stdout.reconfigure(encoding="utf-8")
@@ -40,10 +53,10 @@ Answer:
 
 def safe_text(text):
     return text.encode("utf-8", errors="ignore").decode("utf-8")
-# -----------------------------
-# 3. CALL LLM (OLLAMA)
-# -----------------------------
-def call_llm(prompt: str) -> str:
+# -----------------------------------------------------------------------
+# 3. CALL LLM (OLLAMA)  This method we can use when we don't use fast api
+# -----------------------------------------------------------------------
+"""def call_llm(prompt: str) -> str:
     result = subprocess.run(
         ["ollama", "run", "llama3"],
         input=prompt,
@@ -52,7 +65,7 @@ def call_llm(prompt: str) -> str:
         encoding="utf-8"    # ✅ avoids Unicode errors
     )
 
-    return result.stdout.strip()
+    return result.stdout.strip()"""
 
 
 
