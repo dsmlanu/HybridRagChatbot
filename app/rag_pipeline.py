@@ -4,7 +4,6 @@ import subprocess
 import requests
 import os
 
-os.environ["GROQ_API_KEY"] = "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"
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 #-----------------------------------------------------------
 # 1. LLM method which use groq_api_key
