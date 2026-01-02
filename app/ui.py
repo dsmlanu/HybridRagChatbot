@@ -7,6 +7,7 @@ from rag_pipeline import rag_pipeline
 # -----------------------------
 # APP CONFIG
 # -----------------------------
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 st.set_page_config(page_title="Hybrid RAG Chatbot", layout="wide")
 st.title("📄 Hybrid RAG PDF Chatbot")
 st.write("Upload a PDF and ask questions using Hybrid Search + LLaMA")
