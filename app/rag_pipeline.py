@@ -2,19 +2,17 @@ from hybrid_search import hybrid_search
 from ingest import run_ingestion
 import subprocess
 import requests
-
-BACKEND_URL = "https://hybrid-rag-fastapi-backend.onrender.comvenv/generate"
-
-# ----------------------------------------------------------------sw2   1-------
-# 1. CALL LLM (OLLAMA)  This method we can use when we  use fast api
-# -----------------------------------------------------------------------
 import os
-import requests
 
+os.environ["GROQ_API_KEY"] = "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"
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+#-----------------------------------------------------------
+# 1. LLM method which use groq_api_key
+#--------------------------------------------------------
 
 def call_llm(prompt: str):
-    url = "https://api.groq.com/openai/v1/chat/completions"
+    
+    url = "https://api.groq.com/openai/v1/chat/completions"  # ✅ corrected URL
 
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
@@ -22,27 +20,19 @@ def call_llm(prompt: str):
     }
 
     data = {
-        "model": "llama3-70b-8192",
+        "model": "llama-3.3-70b-versatile",  # valid Groq model
         "messages": [
             {"role": "user", "content": prompt}
-        ]
+        ],
+        "temperature": 0.7
     }
 
     r = requests.post(url, json=data, headers=headers)
     r.raise_for_status()
 
     return r.json()["choices"][0]["message"]["content"]
-
-
-'''def call_llm(prompt):
-    payload = {"prompt": prompt}
-    r = requests.post(BACKEND_URL, json=payload)
-    return r.json().get("response", "")'''
-
-import sys
-sys.stdout.reconfigure(encoding="utf-8")
 # -----------------------------
-# 1. BUILD CONTEXT
+# 2. BUILD CONTEXT
 # -----------------------------
 def build_context(docs, max_chars=3000):
     context = ""
@@ -53,7 +43,7 @@ def build_context(docs, max_chars=3000):
 
 
 # -----------------------------
-# 2. PROMPT TEMPLATE (RAG SAFE)
+# 3. PROMPT TEMPLATE (RAG SAFE)
 # -----------------------------
 def create_prompt(context, query):
     prompt = f"""
@@ -70,28 +60,6 @@ Question:
 Answer:
 """
     return prompt
-# -----------------------------
-# 4. for handling UnicodeEncodeError: 'charmap' codec can't encode character '\u2217' in position 1255:
-#character maps to <undefined>
-# -----------------------------
-
-def safe_text(text):
-    return text.encode("utf-8", errors="ignore").decode("utf-8")
-# -----------------------------------------------------------------------
-# 3. CALL LLM (OLLAMA)  This method we can use when we don't use fast api
-# -----------------------------------------------------------------------
-"""def call_llm(prompt: str) -> str:
-    result = subprocess.run(
-        ["ollama", "run", "llama3"],
-        input=prompt,
-        capture_output=True,
-        text=True,          # ✅ VERY IMPORTANT
-        encoding="utf-8"    # ✅ avoids Unicode errors
-    )
-
-    return result.stdout.strip()"""
-
-
 
 # -----------------------------
 # 4. FULL RAG PIPELINE
